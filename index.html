@@ -49,10 +49,10 @@
             <label>胜率:</label> ${(data.win_rate || 0).toFixed(2)}%
           </div>
           <div class="stat">
-            <label>总盈亏 (SOL):</label> ${data.total_profit.toFixed(6)}
+            <label>总盈亏 (SOL):</label> ${(data.total_profit || 0).toFixed(2)}
           </div>
           <div class="stat">
-            <label>总手续费 (SOL):</label> ${data.total_fee.toFixed(6)}
+            <label>总手续费 (SOL):</label> ${(data.total_fee || 0).toFixed(2)}
           </div>
         `;
       })
@@ -62,4 +62,5 @@
   </script>
 </body>
 </html>
+
 
