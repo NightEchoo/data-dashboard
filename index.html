@@ -46,7 +46,7 @@
             <label>输的局数:</label> ${data.lose_count}
           </div>
           <div class="stat">
-            <label>胜率:</label> ${data.win_rate.toFixed(2)}%
+            <label>胜率:</label> ${(data.win_rate || 0).toFixed(2)}%
           </div>
           <div class="stat">
             <label>总盈亏 (SOL):</label> ${data.total_profit.toFixed(6)}
@@ -62,3 +62,4 @@
   </script>
 </body>
 </html>
+
