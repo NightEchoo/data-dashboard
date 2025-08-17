@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的数据看板</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .stat {
+      margin: 20px 0;
+    }
+    .stat label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>今天的数据看板</h1>
+  <div id="content">加载中...</div>
+
+  <script>
+    fetch("data.json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("content").innerHTML = `
+          <div class="stat">
+            <label>日期:</label> ${data.today}
+          </div>
+          <div class="stat">
+            <label>总局数:</label> ${data.rounds}
+          </div>
+          <div class="stat">
+            <label>赢的局数:</label> ${data.win_count}
+          </div>
+          <div class="stat">
+            <label>输的局数:</label> ${data.lose_count}
+          </div>
+          <div class="stat">
+            <label>胜率:</label> ${data.win_rate.toFixed(2)}%
+          </div>
+          <div class="stat">
+            <label>总盈亏 (SOL):</label> ${data.total_profit.toFixed(6)}
+          </div>
+          <div class="stat">
+            <label>总手续费 (SOL):</label> ${data.total_fee.toFixed(6)}
+          </div>
+        `;
+      })
+      .catch(err => {
+        document.getElementById("content").innerText = "加载失败：" + err;
+      });
+  </script>
+</body>
+</html>
