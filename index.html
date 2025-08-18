@@ -7,11 +7,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; padding:0; transition:background 0.3s, color 0.3s; }
-    .navbar {
-      display:flex; justify-content:space-between; align-items:center;
-      padding:12px 20px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05);
-      position:sticky; top:0; z-index:100; transition:background 0.3s, color 0.3s;
-    }
+    .navbar { display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05); position:sticky; top:0; z-index:100; transition:background 0.3s, color 0.3s; }
     .navbar .logo { font-size:18px; font-weight:bold; color:#3b82f6; }
     .navbar .title { font-size:16px; color:#374151; margin-left:12px; }
     .navbar-left { display:flex; align-items:center; }
@@ -46,7 +42,7 @@
   <div class="grid">
     <div class="card">
       <div class="title">Now</div>
-      <div class="value">$3,757</div>
+      <div class="value" id="solBalance">$0.00</div>
       <div class="positive">环比上周 ▲20.57%</div>
     </div>
     <div class="card">
@@ -74,6 +70,28 @@
   </div>
 
   <script>
+    // Fetching SOL balance dynamically (for example, from Solscan API or using a scraping method)
+    async function fetchSolBalance() {
+      const solAddress = 'A9NBEQeCYzvqidFnh7UVZsBrW2T5df4cqnBjxCBQRJ88';
+      const solscanUrl = `https://api.solscan.io/account/${solAddress}`;
+      try {
+        // Use a proper API or method to get the balance (this is just a placeholder)
+        const response = await fetch(solscanUrl);
+        const data = await response.json();
+
+        // Assuming 'balance' is the field containing the SOL balance
+        const solBalance = data.balance;  // Replace with actual field path based on API response
+        const solValue = (solBalance * 182.93).toFixed(2); // Example: convert SOL to USD (based on current rate)
+        
+        // Update the value on the page
+        document.getElementById('solBalance').innerText = `${solBalance} SOL ($${solValue})`;
+      } catch (error) {
+        console.error("Error fetching SOL balance:", error);
+      }
+    }
+
+    fetchSolBalance();
+
     const ctx1 = document.getElementById('pieChart').getContext('2d');
     new Chart(ctx1, {
       type: 'pie',
