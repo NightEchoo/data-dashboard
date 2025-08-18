@@ -6,22 +6,42 @@
   <title>Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; padding:20px; transition:background 0.3s, color 0.3s; }
-    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+    body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; padding:0; transition:background 0.3s, color 0.3s; }
+    .navbar {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:12px 20px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      position:sticky; top:0; z-index:100; transition:background 0.3s, color 0.3s;
+    }
+    .navbar .logo { font-size:18px; font-weight:bold; color:#3b82f6; }
+    .navbar .title { font-size:16px; color:#374151; margin-left:12px; }
+    .navbar-left { display:flex; align-items:center; }
+
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; padding:20px; }
     .card { background:white; border-radius:16px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:background 0.3s, color 0.3s; }
     .title { font-size:14px; color:#888; margin-bottom:6px; }
     .value { font-size:32px; font-weight:bold; }
     .positive { color:#16a34a; font-size:14px; }
     .progress-bar { background:#e5e7eb; border-radius:10px; overflow:hidden; height:12px; margin-top:10px; }
     .progress { background:#3b82f6; height:12px; }
+
     .dark-mode { background:#1f2937; color:#f9fafb; }
     .dark-mode .card { background:#374151; color:#f9fafb; }
     .dark-mode .title { color:#d1d5db; }
-    .toggle-btn { position:fixed; top:20px; right:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#3b82f6; color:white; }
+    .dark-mode .navbar { background:#111827; color:#f9fafb; }
+    .dark-mode .navbar .title { color:#f9fafb; }
+
+    .toggle-btn { padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#3b82f6; color:white; }
   </style>
 </head>
 <body>
-  <button class="toggle-btn" onclick="toggleDarkMode()">🌙 切换模式</button>
+  <!-- 顶部导航栏 -->
+  <div class="navbar">
+    <div class="navbar-left">
+      <div class="logo">📊 MyDash</div>
+      <div class="title">Dashboard</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDarkMode()">🌙 切换模式</button>
+  </div>
 
   <div class="grid">
     <div class="card">
@@ -48,7 +68,7 @@
     </div>
   </div>
 
-  <div class="card" style="margin-top:20px;">
+  <div class="card" style="margin:20px;">
     <div class="title">7days变化</div>
     <canvas id="barChart" height="200"></canvas>
   </div>
