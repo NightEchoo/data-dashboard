@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; padding:20px; transition:background 0.3s, color 0.3s; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+    .card { background:white; border-radius:16px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.05); transition:background 0.3s, color 0.3s; }
+    .title { font-size:14px; color:#888; margin-bottom:6px; }
+    .value { font-size:32px; font-weight:bold; }
+    .positive { color:#16a34a; font-size:14px; }
+    .progress-bar { background:#e5e7eb; border-radius:10px; overflow:hidden; height:12px; margin-top:10px; }
+    .progress { background:#3b82f6; height:12px; }
+    .dark-mode { background:#1f2937; color:#f9fafb; }
+    .dark-mode .card { background:#374151; color:#f9fafb; }
+    .dark-mode .title { color:#d1d5db; }
+    .toggle-btn { position:fixed; top:20px; right:20px; padding:8px 16px; border:none; border-radius:8px; cursor:pointer; background:#3b82f6; color:white; }
+  </style>
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleDarkMode()">🌙 切换模式</button>
+
+  <div class="grid">
+    <div class="card">
+      <div class="title">Now</div>
+      <div class="value">$3,757</div>
+      <div class="positive">环比上周 ▲20.57%</div>
+    </div>
+    <div class="card">
+      <div class="title">周发布视频数</div>
+      <div class="value">11</div>
+      <div class="positive">环比上周 ▲1</div>
+    </div>
+    <div class="card">
+      <div class="title">rate</div>
+      <canvas id="pieChart" height="150"></canvas>
+    </div>
+    <div class="card">
+      <div class="title">Everyday</div>
+      <div class="value">62.50%</div>
+      <div class="progress-bar">
+        <div class="progress" style="width:62.5%"></div>
+      </div>
+      <div class="title">当前 25 | 目标 40</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="title">7days变化</div>
+    <canvas id="barChart" height="200"></canvas>
+  </div>
+
+  <script>
+    const ctx1 = document.getElementById('pieChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'pie',
+      data: {
+        labels: ['DE: 6','LS: 5'],
+        datasets: [{ data:[6,5], backgroundColor:['#06b6d4','#3b82f6'] }]
+      }
+    });
+
+    const ctx2 = document.getElementById('barChart').getContext('2d');
+    new Chart(ctx2, {
+      data: {
+        labels: ['7/27-8/2','8/3-8/9','8/10-8/16'],
+        datasets: [
+          { type:'bar', label:'Living Stone', data:[87600,97600,86700], backgroundColor:'#3b82f6' },
+          { type:'line', label:'Living Stone CTR', data:[9.7,9.63,9.52], borderColor:'#f97316', yAxisID:'y1' }
+        ]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero:true, max:100000 },
+          y1: { beginAtZero:true, position:'right', max:10 }
+        }
+      }
+    });
+
+    function toggleDarkMode(){
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>
