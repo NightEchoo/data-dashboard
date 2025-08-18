@@ -1,0 +1,33 @@
+name: Fetch Solscan Balance
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 每小时抓取一次
+  workflow_dispatch: # 手动触发任务
+
+jobs:
+  fetch_sol_balance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Fetch Solscan Balance
+        run: |
+          node fetchSolBalance.js
+
+      - name: Commit and push data
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add solBalance.json
+          git commit -m "Update Solscan balance"
+          git push
